@@ -17,10 +17,10 @@ const DESTROY = 'DESTROY_LOCAL'
  */
 
 function reducer (state, action) {
+  const {localReducer, key, initialState = {}} = action.payload
+
   switch (action.type) {
     case CREATE:
-      const {localReducer, key, initialState = {}} = action.payload
-
       return {
         ...state,
         local: {
@@ -34,9 +34,7 @@ function reducer (state, action) {
       }
 
     case UPDATE:
-      const {key} = action.payload
       const local = state.local[key]
-      const {localReducer} = local
 
       return {
         ...state,
@@ -44,14 +42,12 @@ function reducer (state, action) {
           ...(state.local || {}),
           [key]: {
             ...state.local[key],
-            state: localReducer(local.state, action.payload.action)
+            state: local.reducer(local.state, action.payload.action)
           }
         }
       }
 
     case DESTROY:
-      const {key} = action
-
       return {
         ...state,
         local: omit(state.local || {})
@@ -68,14 +64,14 @@ function actions (localReducer) {
         type: CREATE,
         payload: {localReducer, key, initialState}
       }
-    }
+    },
 
     update (key, action) {
       return {
         type: UPDATE,
         payload: {key, action}
       }
-    }
+    },
 
     destroy (key) {
       return {
