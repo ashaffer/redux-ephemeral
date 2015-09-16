@@ -1,5 +1,5 @@
 
-# redux-local
+# redux-ephemeral
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
@@ -7,7 +7,7 @@ Pattern for managing transient local state in redux
 
 ## Installation
 
-    $ npm install redux-local
+    $ npm install redux-ephemeral
 
 ## Experiment
 

@@ -1,7 +1,7 @@
 {
-  "name": "redux-local",
+  "name": "redux-ephemeral",
   "description": "Pattern for managing transient local state in redux",
-  "repository": "git://github.com/ashaffer/redux-local.git",
+  "repository": "git://github.com/ashaffer/redux-ephemeral.git",
   "version": "0.1.0",
   "license": "MIT",
   "main": "lib/index.js",
@@ -10,7 +10,11 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
-    "object.omit": "^2.0.0"
+    "babel": "^5.8.23",
+    "babel-tape-runner": "^1.2.0",
+    "object.omit": "^2.0.0",
+    "standard": "^5.2.2",
+    "tape": "^4.2.0"
   },
   "devDependencies": {
     "babel": "^5.8.21",

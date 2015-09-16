@@ -8,41 +8,49 @@ import omit from 'object.omit'
  * Action types
  */
 
-const CREATE = 'CREATE_LOCAL'
-const UPDATE = 'UPDATE_LOCAL'
-const DESTROY = 'DESTROY_LOCAL'
+const CREATE = 'CREATE_EPHEMERAL'
+const UPDATE = 'UPDATE_EPHEMERAL'
+const DESTROY = 'DESTROY_EPHEMERAL'
 
 /**
- * Local state management
+ * Reducer map
+ *
+ * Note: We store this outside of state because, strictly speaking, it is not *state*.  It is inherent in the UI rendering tree,
+ * and as such, is redundant information.  It is also unserializable, so it would be wrong to materialize it into state.
+ */
+
+const localReducers = {}
+
+/**
+ * Ephemeral state management
  */
 
 function reducer (state, action) {
-  const {localReducer, key, initialState = {}} = action.payload
+  const {key, initialState = {}} = action.payload
 
   switch (action.type) {
     case CREATE:
       return {
         ...state,
-        local: {
-          ...(state.local || {}),
+        ephemeral: {
+          ...(state.ephemeral || {}),
           [key]: {
             key: key,
-            reducer: localReducer,
             state: initialState
           }
         }
       }
 
     case UPDATE:
-      const local = state.local[key]
+      const ephemeral = state.ephemeral[key]
 
       return {
         ...state,
-        local: {
-          ...(state.local || {}),
+        ephemeral: {
+          ...(state.ephemeral),
           [key]: {
-            ...state.local[key],
-            state: local.reducer(local.state, action.payload.action)
+            ...state.ephemeral[key],
+            state: localReducers[key](ephemeral.state, action.payload.action)
           }
         }
       }
@@ -50,7 +58,7 @@ function reducer (state, action) {
     case DESTROY:
       return {
         ...state,
-        local: omit(state.local || {})
+        ephemeral: omit(state.ephemeral, key)
       }
   }
 
@@ -60,9 +68,11 @@ function reducer (state, action) {
 function actions (localReducer) {
   return {
     create (key, initialState) {
+      localReducers[key] = localReducer
+
       return {
         type: CREATE,
-        payload: {localReducer, key, initialState}
+        payload: {key, initialState}
       }
     },
 
@@ -74,6 +84,8 @@ function actions (localReducer) {
     },
 
     destroy (key) {
+      delete localReducers[key]
+
       return {
         type: DESTROY,
         payload: {key}
