@@ -78,7 +78,7 @@ function destroy (path, state) {
 
   return {
     ...state,
-    [key]: update(path.slice(1), state[key])
+    [key]: destroy(path.slice(1), state[key])
   }
 }
 
