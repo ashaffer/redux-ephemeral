@@ -9,13 +9,21 @@ Pattern for managing transient local state in redux
 
     $ npm install redux-ephemeral
 
-## Experiment
+## Setup
 
-This is an experiment for now.  Still trying to reason out how this all should work.  I'd like this to provide a minimal toolset to do state localization in redux, in a view-system agnostic way (i.e. not coupled to React).
+Add redux-ephemeral to your primary redux reducer:
 
-## Ideas
+`reduceReducers(reducer, ephemeral)`
 
-  * Component state as a tree.  This would be a substantial boon to asymptotic performance, at the cost of some code complexity, and possibly some loss of functionality?  Or gain?  Will have to experiment.  Transplanting subtrees is easy with a tree structure, but referencing state from a distance might get harder.
+## Usage
+
+redux-ephemeral exports three action creators:
+
+  * `createEphemeral(key, reducer, initialState)` - Create a chunk of ephemeral state at the dotted path specified by `key` in the global state atom, initialize it to `initialState` and bind `reducer` to it.
+  * `updateEphemeral(key, action)` - Direct an action to a particular chunk of ephemeral state, specified by `key`.  `action` will be processed by the reducer who was bound to the piece of state specified by `key`.
+  * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
+
+This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [vdux-local](https://github.com/ashaffer/vdux-local) for an example of one such.
 
 ## License
 
