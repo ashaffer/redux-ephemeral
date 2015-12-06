@@ -16,7 +16,7 @@ const DESTROY = 'DESTROY_EPHEMERAL'
  * Ephemeral state reducer
  */
 
-function reducer (state, action) {
+function reducer (state = {}, action) {
   switch (action.type) {
     case UPDATE:
       return setProp(action.meta.key, state, action.payload)
