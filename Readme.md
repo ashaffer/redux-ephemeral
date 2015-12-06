@@ -23,8 +23,7 @@ Or you can mount it at a particular path, to keep your ephemeral state in one pl
 
 redux-ephemeral exports three action creators:
 
-  * `createEphemeral(key, initialState)` - Create a chunk of ephemeral state at the dotted path specified by `key` in the global state atom, and initialize it to `initialState`.
-  * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state`.
+  * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state` (can also be used to initialize it).
   * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
 
 This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [vdux-local](https://github.com/ashaffer/vdux-local) for an example of one such.

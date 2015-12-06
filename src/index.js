@@ -9,7 +9,6 @@ import omitProp from '@micro-js/omit-prop'
  * Action types
  */
 
-const CREATE = 'CREATE_EPHEMERAL'
 const UPDATE = 'UPDATE_EPHEMERAL'
 const DESTROY = 'DESTROY_EPHEMERAL'
 
@@ -19,19 +18,10 @@ const DESTROY = 'DESTROY_EPHEMERAL'
 
 function reducer (state, action) {
   switch (action.type) {
-    case CREATE: {
-      const path = action.meta.key.split('.')
-      return setProp(path, state, action.payload || {})
-    }
-    case UPDATE: {
-      const {key, reducer} = action.meta
-      const path = key.split('.')
-      return setProp(path, state, action.payload)
-    }
-    case DESTROY: {
-      const path = action.meta.key.split('.')
-      return omitProp(path, state)
-    }
+    case UPDATE:
+      return setProp(action.meta.key, state, action.payload)
+    case DESTROY:
+      return omitProp(action.meta.key, state)
   }
 
   return state
@@ -40,14 +30,6 @@ function reducer (state, action) {
 /**
  * Action creators
  */
-
-function createEphemeral (key, initialState) {
-  return {
-    type: CREATE,
-    payload: initialState,
-    meta: {key}
-  }
-}
 
 function updateEphemeral (key, state) {
   return {
@@ -70,7 +52,6 @@ function destroyEphemeral (key) {
 
 export default reducer
 export {
-  createEphemeral,
   updateEphemeral,
   destroyEphemeral
 }
