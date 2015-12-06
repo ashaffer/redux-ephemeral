@@ -10,7 +10,6 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
-    "@micro-js/get-prop": "^1.0.0",
     "@micro-js/omit-prop": "^1.0.0",
     "@micro-js/set-prop": "^0.1.0"
   },
