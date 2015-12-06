@@ -15,12 +15,16 @@ Add redux-ephemeral to your primary redux reducer:
 
 `reduceReducers(reducer, ephemeral)`
 
+Or you can mount it at a particular path, to keep your ephemeral state in one place:
+
+`combineReducers({components: ephemeral ...otherReducers})
+
 ## Usage
 
 redux-ephemeral exports three action creators:
 
-  * `createEphemeral(key, reducer, initialState)` - Create a chunk of ephemeral state at the dotted path specified by `key` in the global state atom, initialize it to `initialState` and bind `reducer` to it.
-  * `updateEphemeral(key, action)` - Direct an action to a particular chunk of ephemeral state, specified by `key`.  `action` will be processed by the reducer who was bound to the piece of state specified by `key`.
+  * `createEphemeral(key, initialState)` - Create a chunk of ephemeral state at the dotted path specified by `key` in the global state atom, and initialize it to `initialState`.
+  * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state`.
   * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
 
 This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [vdux-local](https://github.com/ashaffer/vdux-local) for an example of one such.
