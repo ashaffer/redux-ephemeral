@@ -21,7 +21,7 @@ Or you can mount it at a particular path, to keep your ephemeral state in one pl
 
 ## Usage
 
-redux-ephemeral exports three action creators:
+redux-ephemeral exports two action creators:
 
   * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state` (can also be used to initialize it).
   * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
