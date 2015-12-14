@@ -3,7 +3,7 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-Pattern for managing transient local state in redux
+Library for managing transient local state in redux
 
 ## Installation
 
@@ -17,16 +17,16 @@ Add redux-ephemeral to your primary redux reducer:
 
 Or you can mount it at a particular path, to keep your ephemeral state in one place:
 
-`combineReducers({components: ephemeral ...otherReducers})
+`combineReducers({app: ephemeral ...otherReducers})
 
 ## Usage
 
-redux-ephemeral exports three action creators:
+redux-ephemeral exports two action creators:
 
   * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state` (can also be used to initialize it).
   * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
 
-This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [vdux-local](https://github.com/ashaffer/vdux-local) for an example of one such.
+This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [virtex-local](https://github.com/ashaffer/virtex-local) for an example of one such.
 
 ## License
 

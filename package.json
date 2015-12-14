@@ -16,9 +16,5 @@
   "devDependencies": {
     "babel-preset-es2015": "^6.1.2",
     "tape": "^4.2.0"
-  },
-  "engines": {
-    "node": "~0.10.38",
-    "npm": "~2.9.0"
   }
 }
