@@ -2,8 +2,8 @@
  * Imports
  */
 
-import setProp from '@micro-js/set-prop'
-import omitProp from '@micro-js/omit-prop'
+import setProp from '@f/set-prop'
+import omitProp from '@f/omit-prop'
 
 /**
  * Action types

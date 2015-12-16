@@ -10,8 +10,8 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
-    "@micro-js/omit-prop": "^1.0.0",
-    "@micro-js/set-prop": "^0.1.3"
+    "@f/omit-prop": "^1.1.2",
+    "@f/set-prop": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.1.2",
