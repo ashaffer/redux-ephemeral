@@ -17,7 +17,7 @@ Add redux-ephemeral to your primary redux reducer:
 
 Or you can mount it at a particular path, to keep your ephemeral state in one place:
 
-`combineReducers({app: ephemeral ...otherReducers})
+`combineReducers({app: ephemeral ...otherReducers})`
 
 ## Usage
 
