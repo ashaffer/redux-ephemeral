@@ -2,6 +2,7 @@
  * Imports
  */
 
+import getProp from '@f/get-prop'
 import setProp from '@f/set-prop'
 import omitProp from '@f/omit-prop'
 
@@ -9,19 +10,24 @@ import omitProp from '@f/omit-prop'
  * Action types
  */
 
-const UPDATE = 'UPDATE_EPHEMERAL'
+const CREATE = 'CREATE_EPHEMERAL'
 const DESTROY = 'DESTROY_EPHEMERAL'
 
 /**
  * Ephemeral state reducer
  */
 
-function reducer (state = {}, action) {
+function ephemeralReducer (state = {}, action) {
+  const {reducer, key} = action.meta.ephemeral
+
   switch (action.type) {
-    case UPDATE:
-      return setProp(action.meta.key, state, action.payload)
+    case CREATE:
+      return setProp(key, state, action.payload)
     case DESTROY:
-      return omitProp(action.meta.key, state)
+      return omitProp(key, state)
+    default:
+      const newState = reducer(getProp(key, state), action)
+      return setProp(key, state, newState)
   }
 
   return state
@@ -31,27 +37,59 @@ function reducer (state = {}, action) {
  * Action creators
  */
 
-function updateEphemeral (key, state) {
+function toEphemeral (key, reducer, action) {
   return {
-    type: UPDATE,
-    payload: state,
-    meta: {key}
+    ...action,
+    meta: {
+      ...(action.meta || {}),
+      ephemeral: {
+        key,
+        reducer
+      }
+    }
+  }
+}
+
+function createEphemeral (key, initialState) {
+  return {
+    type: CREATE,
+    payload: initialState,
+    meta: {
+      ephemeral: {key}
+    }
   }
 }
 
 function destroyEphemeral (key) {
   return {
     type: DESTROY,
-    meta: {key}
+    meta: {
+      ephemeral: {key}
+    }
   }
+}
+
+/**
+ * Mount reducer
+ */
+
+function mount (prop, reducer) {
+  return (state, action) => isEphemeral(action)
+    ? {...state, [prop]: ephemeralReducer(state[prop] || {}, action)}
+    : reducer(state, action)
+}
+
+function isEphemeral (action) {
+  return action.meta && action.meta.hasOwnProperty('ephemeral')
 }
 
 /**
  * Exports
  */
 
-export default reducer
+export default mount
 export {
-  updateEphemeral,
+  toEphemeral,
+  createEphemeral,
   destroyEphemeral
 }

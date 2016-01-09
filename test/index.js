@@ -3,7 +3,7 @@
  */
 
 import test from 'tape'
-import redux-ephemeral from '../src'
+import ephemeral from '../src'
 
 /**
  * Tests

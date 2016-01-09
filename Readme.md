@@ -11,22 +11,29 @@ Library for managing transient local state in redux
 
 ## Setup
 
-Add redux-ephemeral to your primary redux reducer:
+Wrap your root reducer with redux-ephemeral, like so:
 
-`reduceReducers(reducer, ephemeral)`
+```javascript
+import ephemeral from 'redux-ephemeral'
 
-Or you can mount it at a particular path, to keep your ephemeral state in one place:
+function reducer (state, action) {
+  // your app's reducer logic
+}
 
-`combineReducers({app: ephemeral ...otherReducers})`
+export default ephemeral('ui', reducer)
+```
+
+The `'ui'` argument specifies where in your state to mount your ephemeral state. So, in the example above, all transient/local state will be mounted under `state.ui`.
 
 ## Usage
 
-redux-ephemeral exports two action creators:
+redux-ephemeral exports three action creators:
 
-  * `updateEphemeral(key, state)` - Update the ephemeral state at path `key` to `state` (can also be used to initialize it).
-  * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`.
+  * `createEphemeral(key, state)` - Initialize the ephemeral state at path `key` to `state`
+  * `toEphemeral(key, reducer, action)` - Direct an ephemeral action to the path specified by `key`, and reducer it with `reducer` when it gets there
+  * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`
 
-This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [virtex-local](https://github.com/ashaffer/virtex-local) for an example of one such.
+This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [virtex-local](https://github.com/ashaffer/virtex-local) for such an example.
 
 ## License
 
