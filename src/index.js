@@ -2,9 +2,7 @@
  * Imports
  */
 
-import getProp from '@f/get-prop'
-import setProp from '@f/set-prop'
-import omitProp from '@f/omit-prop'
+import * as hamt from 'mini-hamt'
 
 /**
  * Action types
@@ -17,17 +15,16 @@ const DESTROY = 'DESTROY_EPHEMERAL'
  * Ephemeral state reducer
  */
 
-function ephemeralReducer (state = {}, action) {
+function ephemeralReducer (state = hamt.empty, action) {
   const {reducer, key} = action.meta.ephemeral
 
   switch (action.type) {
     case CREATE:
-      return setProp(key, state, action.payload)
+      return state.set(key, action.payload)
     case DESTROY:
-      return omitProp(key, state)
+      return state.delete(key)
     default:
-      const newState = reducer(getProp(key, state), action)
-      return setProp(key, state, newState)
+      return state.set(key, reducer(state.get(key), action))
   }
 
   return state
@@ -69,13 +66,17 @@ function destroyEphemeral (key) {
   }
 }
 
+function lookup (state, key) {
+  return hamt.get(state, key)
+}
+
 /**
  * Mount reducer
  */
 
 function mount (prop, reducer) {
   return (state, action) => isEphemeral(action)
-    ? {...state, [prop]: ephemeralReducer(state[prop] || {}, action)}
+    ? {...state, [prop]: ephemeralReducer(state[prop], action)}
     : reducer(state, action)
 }
 
@@ -90,6 +91,8 @@ function isEphemeral (action) {
 export default mount
 export {
   toEphemeral,
+  isEphemeral,
   createEphemeral,
-  destroyEphemeral
+  destroyEphemeral,
+  lookup
 }

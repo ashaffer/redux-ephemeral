@@ -10,9 +10,7 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
-    "@f/get-prop": "^1.1.1",
-    "@f/omit-prop": "^1.1.2",
-    "@f/set-prop": "^1.0.0"
+    "mini-hamt": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

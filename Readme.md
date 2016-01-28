@@ -3,7 +3,7 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-Library for managing transient local state in redux
+Library for managing transient local state in redux. Uses a [hash array mapped trie](https://github.com/ashaffer/mini-hamt) internally, so it is extremely performant by default, but you still deal only with plain JS objects, and your redux state atom is still serializable in the same way.
 
 ## Installation
 
@@ -34,6 +34,11 @@ redux-ephemeral exports three action creators:
   * `destroyEphemeral(key)` - Destroy the chunk of ephemeral state specified by `key`
 
 This library can be used directly in components, but it is intended to be a low-level library that is consumed by a higher-level local state abstraction.  Check out [virtex-local](https://github.com/ashaffer/virtex-local) for such an example.
+
+It also exports two helper functions:
+
+  * `lookup(state, key)` - Takes the state map and returns the value for the local state at `key`.
+  * `isEphemeral(action)` - Check whether or not an action is an ephemeral action.
 
 ## License
 
