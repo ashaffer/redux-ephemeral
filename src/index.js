@@ -20,11 +20,11 @@ function ephemeralReducer (state = hamt.empty, action) {
 
   switch (action.type) {
     case CREATE:
-      return state.set(key, action.payload)
+      return hamt.set(state, key, action.payload)
     case DESTROY:
-      return state.delete(key)
+      return hamt.del(state, key)
     default:
-      return state.set(key, reducer(state.get(key), action))
+      return hamt.set(state, key, reducer(hamt.get(state, key), action))
   }
 
   return state
