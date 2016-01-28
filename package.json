@@ -2,7 +2,7 @@
   "name": "redux-ephemeral",
   "description": "Pattern for managing transient local state in redux",
   "repository": "git://github.com/ashaffer/redux-ephemeral.git",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
