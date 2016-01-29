@@ -67,7 +67,7 @@ function destroyEphemeral (key) {
 }
 
 function lookup (state, key) {
-  return hamt.get(state, key)
+  return hamt.get(state || hamt.empty, key)
 }
 
 /**
