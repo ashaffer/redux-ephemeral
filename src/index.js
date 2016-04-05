@@ -52,7 +52,8 @@ function createEphemeral (key, initialState) {
     type: CREATE,
     payload: initialState,
     meta: {
-      ephemeral: {key}
+      ephemeral: {key},
+      logLevel: 'trace'
     }
   }
 }
@@ -61,7 +62,8 @@ function destroyEphemeral (key) {
   return {
     type: DESTROY,
     meta: {
-      ephemeral: {key}
+      ephemeral: {key},
+      logLevel: 'trace'
     }
   }
 }
