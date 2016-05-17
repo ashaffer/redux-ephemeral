@@ -24,7 +24,12 @@ function ephemeralReducer (state = hamt.empty, action) {
     case DESTROY:
       return hamt.del(state, key)
     default:
-      return hamt.set(state, key, reducer(hamt.get(state, key), action))
+      const prev = hamt.get(state, key)
+      const next = reducer(prev, action)
+
+      return prev !== next
+        ? hamt.set(state, key, next)
+        : prev
   }
 
   return state
