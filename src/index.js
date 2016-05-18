@@ -29,7 +29,7 @@ function ephemeralReducer (state = hamt.empty, action) {
 
       return prev !== next
         ? hamt.set(state, key, next)
-        : prev
+        : state
   }
 
   return state
