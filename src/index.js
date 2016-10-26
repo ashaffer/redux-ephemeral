@@ -16,6 +16,8 @@ const DESTROY = 'DESTROY_EPHEMERAL'
  */
 
 function ephemeralReducer (state = hamt.empty, action) {
+  if (!isEphemeral(action)) return state
+
   const {reducer, key} = action.meta.ephemeral
 
   switch (action.type) {
