@@ -101,5 +101,6 @@ export {
   isEphemeral,
   createEphemeral,
   destroyEphemeral,
+  ephemeralReducer,
   lookup
 }
